@@ -7,7 +7,6 @@ class Vampire {
   }
 
   /** Simple tree methods **/
-
   // Adds the vampire as an offspring of this vampire
   addOffspring(vampire) {
     this.offspring.push(vampire);
@@ -38,14 +37,28 @@ class Vampire {
   }
 
   /** Stretch **/
-
   // Returns the closest common ancestor of two vampires.
   // The closest common anscestor should be the more senior vampire if a direct ancestor is used.
   // For example:
   // * when comparing Ansel and Sarah, Ansel is the closest common anscestor.
   // * when comparing Ansel and Andrew, Ansel is the closest common anscestor.
   closestCommonAncestor(vampire) {
+    let line1 = this.ancestryLine;
+    let line2 = vampire.ancestryLine;
+    for (const elem of line1) {
+      if (line2.includes(elem)) {
+        return elem;
+      }
+    }
+  }
 
+  get ancestryLine() {
+    if (!this.creator) {
+      return [this];
+    }
+    const creatorAncestry = this.creator.ancestryLine;
+    creatorAncestry.unshift(this);
+    return creatorAncestry;
   }
 }
 
